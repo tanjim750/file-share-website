@@ -1,0 +1,130 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <title>File Share</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <style>
+      .folder:hover{
+        background-color: rgb(197, 222, 253);
+      }
+
+      .alert:hover{
+        background-color: rgb(157, 200, 238);
+      }
+
+      
+    </style>
+  </head>
+  <body class="p-3 m-0 border-0 bd-example">
+
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'upload.png' %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                FileShare
+              </a>
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/logout">Logout</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"> </a>
+                </li>
+                
+                <a class="navbar-brand" href="/">
+                    <img src="{% static 'upload.png' %}" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                    
+                  </a>
+            </ul>
+        </div>
+    </nav>
+    <div style="display: flex;">
+        <div style="height: 100vh; padding: 20px 20px 20px 10px; display: flex; ">
+            <div style="display:block;">
+              <a href="" title="Folders">
+                <i class="fa fa-file-text" style="font-size:20px; padding-bottom: 15px;" ></i><br>
+              </a>
+              <a href="" title="Image Gellary">
+              <i class="fa fa-file-image-o" style="font-size:20px; padding-bottom: 25px; color: black;"></i><br>
+                
+              </a>
+              <a href="" title="Security">
+              <i class="fa fa-lock" style="font-size:20px; padding-bottom: 10px; color: black;""></i>
+                
+              </a>
+              <a href="" title="Settings">
+              <i class="fa fa-gear" style="font-size:20px; padding-bottom: 15px; color: black;""></i>
+                
+              </a>
+            </div>
+            
+        </div>
+
+        <!-- folder section start -->
+        <div style="height: 100vh; width: 20%; display: flex; overflow: hidden; ">
+            <div style="height: 100vh; width: 3px; background-color: aliceblue; margin-right: 5px;"></div>
+            <div style="margin-top: 20px;">
+              {% for folder in folders %}
+              <!-- single folder start -->
+              <div class="folder" style="height: 30px; width: 100vb;">
+                <i class="fa fa-angle-right" style="margin: 10px 10px 5px 10px;"> 
+                  <i class="fa fa-folder" style="color: rgb(111, 111, 236);"></i> 
+                  <span style="color: rgb(43, 42, 42);">{{folder.name}}</span></i>
+              </div>
+              {% endfor %}
+              <!-- single folder end -->
+
+              <!-- <div class="folder" style="height: 30px; width: 100vb;">
+                <i class="fa fa-angle-right" style="margin: 10px 10px 5px 10px;"> 
+                  <i class="fa fa-folder" style="color: rgb(111, 111, 236);"></i> 
+                  <span style="color: rgb(43, 42, 42);">Tanjim</span></i>
+              </div> -->
+            </div>
+            <!-- <div style="height: 100vh; width: 3px; background-color: aliceblue; margin-left: 10px;"></div> -->
+        </div>
+        <!-- folder section end -->
+
+        <div style="height: 100vh; width: 70%; display: flex; ">
+            <div style="height: 100vh; width: 3px; background-color: aliceblue; margin-right: 5px; "></div>
+
+            <div style="height: 30px; width: 100vb; ">
+                <div class="nav justify-content-end" style="margin: 15px 10px 10px 10px;">
+                  <button type="button" class="btn btn-outline-secondary" style="margin-right: 10px;">New Folder</button>
+                  <button type="file" class="btn btn-primary">Upload</button>
+                </div>
+                <div class="files">
+                  <div class="alert alert-secondary d-flex align-items-center" role="alert" style="background-color: transparent;">
+                    <i class="fa fa-file" style="color: rgb(48, 48, 232);"> &nbsp;&nbsp;&nbsp;</i>
+                    <div>
+                      An example alert with an icon
+                    </div>
+                  </div>
+
+                  <div class="alert alert-secondary d-flex align-items-center" role="alert" style="background-color: transparent;">
+                    <i class="fa fa-file" style="color: rgb(48, 48, 232);"> &nbsp;&nbsp;&nbsp;</i>
+                    <div>
+                      An example alert with an icon
+                    </div>
+                  </div>
+                  
+                </div>
+            </div>
+
+            <!-- <div style="height: 100vh; width: 3px; background-color: aliceblue; margin-left: 10px; background-color: rgb(0, 255, 89);"></div> -->
+        </div>
+        <div style="height: 100vh; width: 25%; display: flex;">
+            <div style="height: 100vh; width: 3px; background-color: aliceblue; margin-right: 5px;"></div>
+
+            <span style="padding: 10px;"> details</span>
+        </div>
+    </div>
+    
+  </body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Code Block</title>
+    <style>
+      /* Code block container */
+      .code-block {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        font-family: monospace;
+        font-size: 14px;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: #f6f8fa;
+        position: relative;
+      }
+      
+      /* Line numbers */
+      .line-numbers {
+        width: 50px;
+        height: 100%;
+        background-color: #f9f9f9;
+        border-right: 1px solid #ddd;
+        padding: 10px 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        text-align: center;
+        box-sizing: border-box;
+      }
+      
+      .line-number {
+        color: #999;
+        font-size: 12px;
+        line-height: 1.2em;
+        padding: 2px 5px;
+        display: block;
+      }
+      
+      /* Code editor */
+      .code-editor {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        resize: none;
+        border: none;
+        padding: 10px;
+        background-color: transparent;
+        box-sizing: border-box;
+        color: #333;
+      }
+      
+      /* Undo/redo buttons */
+      .undo-redo {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+      }
+      
+      .undo-redo button {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        color: #555;
+        font-size: 16px;
+        cursor: pointer;
+        margin-right: 5px;
+      }
+      
+      .undo-redo button:hover {
+        color: #333;
+      }
+      
+      /* Copy button */
+      .copy-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        padding: 8px 12px;
+        border-radius: 3px;
+        cursor: pointer;
+        z-index: 1;
+      }
+      
+      .copy-btn:hover {
+        background-color: #3e8e41;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="code-block">
+      <div class="line-numbers"></div>
+      <textarea class="code-editor"></textarea>
+      <div class="undo-redo">
+        <button class="undo-btn">&#x21B6;</button>
+        <button class="redo-btn">&#x21B7;</button>
+      </div>
+      <button class="copy-btn">Copy</button>
+    </div>
+    
+    <script>
+      const codeBlock = document.querySelector('.code-block');
+      const lineNumbers = document.querySelector('.line-numbers');
+  const codeEditor = document.querySelector('.code-editor');
+  const undoBtn = document.querySelector('.undo-btn');
+  const redoBtn = document.querySelector('.redo-btn');
+  const copyBtn = document.querySelector('.copy-btn');
+  const undoStack = [];
+  const redoStack = [];
+
+  // Generate line numbers
+  function generateLineNumbers() {
+    const lines = codeEditor.value.split('\n');
+    lineNumbers.innerHTML = '';
+    for (let i = 0; i < lines.length; i++) {
+      const lineNum = document.createElement('div');
+      lineNum.classList.add('line-number');
+      lineNum.textContent = i + 1;
+      lineNumbers.appendChild(lineNum);
+    }
+  }
+
+  generateLineNumbers();
+
+  // Handle undo/redo
+  function updateUndoRedo() {
+    undoBtn.disabled = undoStack.length === 0;
+    redoBtn.disabled = redoStack.length === 0;
+  }
+
+  function saveState() {
+    undoStack.push(codeEditor.value);
+    redoStack.length = 0;
+    updateUndoRedo();
+  }
+
+  function undo() {
+    if (undoStack.length > 0) {
+      redoStack.push(codeEditor.value);
+      codeEditor.value = undoStack.pop();
+      generateLineNumbers();
+      updateUndoRedo();
+    }
+  }
+
+  function redo() {
+    if (redoStack.length > 0) {
+      undoStack.push(codeEditor.value);
+      codeEditor.value = redoStack.pop();
+      generateLineNumbers();
+      updateUndoRedo();
+    }
+  }
+
+  codeEditor.addEventListener('input', saveState);
+  undoBtn.addEventListener('click', undo);
+  redoBtn.addEventListener('click', redo);
+
+  // Handle copy
+  copyBtn.addEventListener('click', () => {
+    codeEditor.select();
+    document.execCommand('copy');
+  });
+</script>
+</body></html>
